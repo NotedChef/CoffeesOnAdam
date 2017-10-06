@@ -1,0 +1,12 @@
+<div style="margin-top: 15px">
+  <md-tab-group class="demo-tab-group">
+    <md-tab label="All Orders"><div>
+        <md-list *ngIf="orders$ | async as orders">
+            <md-list-item *ngFor="let o of orders">
+              <app-order-detail-full [order]='o'></app-order-detail-full>
+            </md-list-item>
+          </md-list>
+    </div></md-tab>
+    <md-tab label="Order Summary">Order Summary</md-tab>
+  </md-tab-group>
+</div>

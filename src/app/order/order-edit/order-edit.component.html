@@ -1,0 +1,31 @@
+<div class="header">
+  <img class="avatar" src="{{photoUrl}}" *ngIf="photoUrl">
+  <h2 style="display: inline">Place Order</h2>
+</div>
+<md-card>
+  <form #orderForm="ngForm" novalidate>
+    <md-select placeholder="Style" [(ngModel)]="order.style" name="style" required>
+      <md-option *ngFor="let style of styles" [value]="style.value">
+        {{style.value}}
+      </md-option>
+    </md-select>
+
+    <md-select placeholder="Size" [(ngModel)]="order.size" name="size" required>
+      <md-option *ngFor="let size of sizes" [value]="size.value">
+        {{size.value}}
+      </md-option>
+    </md-select>
+
+    <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk">
+      <md-option *ngFor="let milk of milks" [value]="milk.value">
+        {{milk.value}}
+      </md-option>
+    </md-select>
+
+    <button md-mini-fab (click)="createOrder(order)" class="done"><md-icon>add</md-icon></button>
+  </form>
+  <!-- list of user's orders -->
+  <app-order-list></app-order-list>
+</md-card>
+
+<app-all-orders-list></app-all-orders-list>

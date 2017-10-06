@@ -1,0 +1,5 @@
+<md-list *ngIf="orders$ | async as orders">
+  <md-list-item *ngFor="let o of orders">
+    <app-order-detail [order]='o'></app-order-detail>
+  </md-list-item>
+</md-list>

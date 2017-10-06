@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".write": "auth != null",
+
+      "users" : {
+    		".read": "auth != null"
+    	},
+
+      "Orders": {
+        ".read": "auth != null",
+        ".indexOn": ["uid", "summary"]
+    	},
+
+      "userOrders": {
+        	".read": "auth != null"
+      		//"$uid": {
+        		// ".read": "auth != null && $uid === auth.uid"
+      		//}
+    	}
+   }
+}

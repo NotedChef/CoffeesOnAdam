@@ -40,3 +40,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Private Environment settings
+environment.ts
+environment.prod.ts
+
