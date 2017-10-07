@@ -20,6 +20,7 @@ import { OrderDetailComponent } from './order/order-detail/order-detail.componen
 import { HomeComponent } from './home/home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AllOrdersListComponent } from './order/all-orders-list/all-orders-list.component';
+import { SummarizePipe } from './order/summarize.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AllOrdersListComponent } from './order/all-orders-list/all-orders-list.
     OrderDetailComponent,
     HomeComponent,
     AllOrdersListComponent,
-    OrderDetailFullComponent
+    OrderDetailFullComponent,
+    SummarizePipe
   ],
   imports: [
     BrowserModule,

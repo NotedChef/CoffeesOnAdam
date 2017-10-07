@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./order-edit.component.css']
 })
 export class OrderEditComponent implements OnInit {
+  firstName: string;
   @ViewChild('orderForm')
   orderForm: NgForm;
 
@@ -18,11 +19,12 @@ export class OrderEditComponent implements OnInit {
   order: Order = new Order();
 
   styles = [{value: 'Flat White'}, {value: 'Latte'}, {value: 'Cappuccino'}, {value: 'Long Black'}];
-  sizes = [{value: 'Small'}, {value: 'Regular'}, {value: 'Large'}];
+  sizes = [{value: 'Small'}, {value: 'Regular'}, {value: 'Large'} ];
   milks = [{value: 'Full'}, {value: 'Skinny'}, {value: 'Soy'}, {value: 'Almond'}];
 
   constructor(private orderService: OrderService, private authService: AuthService) {
     this.photoUrl = this.authService.currentUserImageUrl;
+    this.firstName = this.authService.currentUserDisplayName.split(' ', 1)[0];
   }
 
   ngOnInit() {}
