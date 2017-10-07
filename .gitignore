@@ -42,6 +42,5 @@ testem.log
 Thumbs.db
 
 # Private Environment settings
-environment.ts
-environment.prod.ts
+/src/environments/*.*
 
