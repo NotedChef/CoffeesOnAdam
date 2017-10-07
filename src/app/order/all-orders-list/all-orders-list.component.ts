@@ -14,14 +14,21 @@ import 'rxjs/add/operator/do';
   styleUrls: ['./all-orders-list.component.css']
 })
 export class AllOrdersListComponent implements OnInit {
-  orderListSummary$: any;
+  numOrders: number;
+  // orderListSummary$: any;
   orders$: FirebaseListObservable<Order[]>;
 
 
   constructor(private orderService: OrderService) { }
 
   ngOnInit() {
-    this.orders$ = this.orderService.getOrdersList();
+    this.orders$ = this.orderService.getOrdersList({
+      orderByChild: 'name'
+    });
+    this.orders$.subscribe(
+      order => this.numOrders = order.length
+    );
+
     // this.orders$.forEach(order => console.log(order));
     // this.orderListSummary$ = this.orders$ as Observable<any[]>;
     // this.orderListSummary$

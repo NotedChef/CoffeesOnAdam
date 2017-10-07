@@ -9,7 +9,8 @@ import { MdButtonModule,
   MatSelectModule,
   MatIconModule,
   MatListModule,
-  MdTabsModule
+  MdTabsModule,
+  MdChipsModule
  } from '@angular/material';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MdButtonModule,
   MatSelectModule,
   MatIconModule,
   MatListModule,
-  MdTabsModule],
+  MdTabsModule,
+  MdChipsModule],
   exports: [MdButtonModule,
   MdMenuModule,
   MdToolbarModule,
@@ -32,7 +34,8 @@ import { MdButtonModule,
   MatSelectModule,
   MatIconModule,
   MatListModule,
-  MdTabsModule],
+  MdTabsModule,
+  MdChipsModule],
 })
 export class MaterialModule { }
 

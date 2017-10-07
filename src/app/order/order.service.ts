@@ -43,7 +43,7 @@ export class OrderService {
         }
       }
     );
-    this.orders$.subscribe(order => console.log(order));
+    // this.orders$.subscribe(order => console.log(order));
 
     return this.orders$;
   }

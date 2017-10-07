@@ -1,7 +1,12 @@
-<div style="margin-top: 15px" *ngIf="orders$">
-  <md-tab-group class="demo-tab-group">
+<div style="margin-top: 15px" *ngIf="orders$ | async">
+  <md-tab-group class="tab-group">
     <md-tab label="All Orders">
-      <div>
+      <ng-template md-tab-label>
+        All Orders
+        <div class="numberCircle"><span>{{numOrders}}</span></div>
+        <!-- <md-chip color="warn" selectable="false" >{{numOrders}}</md-chip>⭐ -->
+      </ng-template>
+      <div class="tab-content">
         <md-list *ngIf="orders$ | async as orders">
           <md-list-item *ngFor="let o of orders">
             <app-order-detail-full [order]='o'></app-order-detail-full>
@@ -10,11 +15,13 @@
       </div>
     </md-tab>
     <md-tab label="Order Summary">
+      <div class="tab-content">
         <md-list *ngIf="(orders$ | async | summarize) as summaryList">
-            <md-list-item *ngFor="let item of summaryList">
-                {{item.summary}}
-              </md-list-item>
+          <md-list-item *ngFor="let item of summaryList">
+            {{item.summary}}
+          </md-list-item>
         </md-list>
+      </div>
     </md-tab>
   </md-tab-group>
 </div>

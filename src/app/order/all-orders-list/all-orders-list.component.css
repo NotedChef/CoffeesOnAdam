@@ -1,7 +1,23 @@
-.demo-tab-group {
+.tab-group {
   border: 1px solid #e8e8e8;
 }
 
-.demo-tab-content {
-  padding: 16px;
+.tab-content {
+  padding: 0 16px;
+}
+
+.numberCircle {
+  margin: 0 5px;
+  border-radius: 50%;
+  width: 20px;
+  font-weight: bold;
+  font-size: 11px;
+  border: 1px solid #673ab7;
+  background-color: #673ab7;
+}
+.numberCircle span {
+  color: white;
+  text-align: center;
+  line-height: 20px;
+  display: block;
 }

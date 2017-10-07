@@ -33,7 +33,7 @@ export class OrderEditComponent implements OnInit {
     if (!this.authService.authenticated) {
       this.authService.googleLogin();
     }
-    console.log('CreateOrder userid: ', this.authService.currentUserId);
+    // console.log('CreateOrder userid: ', this.authService.currentUserId);
     this.order.summary = this.generateSummary(this.order);
     this.order.milk = this.order.style === 'Long Black' ? '' : this.order.milk;
     this.order.name = this.authService.currentUserDisplayName;

@@ -28,13 +28,11 @@ export class AuthService {
 
   private socialSignIn(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-      .then(_ => this.router.navigate(['order']))
+      .then(_ => {
+        this.router.navigate(['order']);
+        this.updateUserData();
+      })
       .catch(error => console.log('authentication error: ', error));
-      // .then((credential) => {
-      //   this.authState = credential.user;
-      //   this.updateUserData();
-      //   this.router.navigate(['order']);
-      // });
   }
 
   logout() {
