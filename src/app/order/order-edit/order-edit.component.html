@@ -1,31 +1,40 @@
-<div class="header">
-  <img class="avatar" src="{{photoUrl}}" *ngIf="photoUrl">
-  <h3 style="display: inline">Welcome {{firstName}} - place your order</h3>
+<div class="header" fxFlexAlign="center">
+  <img class="avatar" src="{{photoUrl}}" *ngIf="photoUrl" fxFlexAlign="center">
+  <h3 style="display: inline" fxFlexAlign="center">Welcome {{firstName}} - place your order</h3>
 </div>
-<md-card>
-  <form #orderForm="ngForm" novalidate>
-    <md-select placeholder="Style" [(ngModel)]="order.style" name="style" required>
-      <md-option *ngFor="let style of styles" [value]="style.value">
-        {{style.value}}
-      </md-option>
-    </md-select>
+<md-card fxLayoutAlign="center" fxLayout="column">
+  <div>
+    <form #orderForm="ngForm" novalidate fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="flex-start" fxLayoutGap="30px">
+      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle="ngModel" required >
+        <md-option *ngFor="let style of styles" [value]="style.value" autofocus>
+          {{style.value}}
+        </md-option>
+      </md-select>
 
-    <md-select placeholder="Size" [(ngModel)]="order.size" name="size" required>
-      <md-option *ngFor="let size of sizes" [value]="size.value">
-        {{size.value}}
-      </md-option>
-    </md-select>
+      <md-select placeholder="Size" [(ngModel)]="order.size" name="size" required>
+        <md-option *ngFor="let size of sizes" [value]="size.value">
+          {{size.value}}
+        </md-option>
+      </md-select>
 
-    <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk">
-      <md-option *ngFor="let milk of milks" [value]="milk.value">
-        {{milk.value}}
-      </md-option>
-    </md-select>
-
-    <button md-mini-fab (click)="createOrder()" class="done"><md-icon>add</md-icon></button>
-  </form>
-  <!-- list of user's orders -->
-  <app-order-list></app-order-list>
+      <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk"
+          *ngIf="coffeeStyle.value !== 'Long Black' && coffeeStyle.value !== '' " >
+        <md-option *ngFor="let milk of milks" [value]="milk.value">
+          {{milk.value}}
+        </md-option>
+      </md-select>
+      <button
+        md-mini-fab (click)="createOrder()"
+        fxFlexAlign.gt-sm="" fxFlexAlign="center"
+        [disabled]="!orderForm.form.valid">
+          <md-icon>add</md-icon>
+        </button>
+    </form>
+    </div>
+  <div>
+    <!-- list of user's orders -->
+    <app-order-list></app-order-list>
+  </div>
 </md-card>
-
+<!-- Tabs with list of all orders and summary of orders -->
 <app-all-orders-list></app-all-orders-list>

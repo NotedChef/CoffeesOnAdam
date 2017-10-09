@@ -12,7 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class OrderEditComponent implements OnInit {
   firstName: string;
-  @ViewChild('orderForm')
+  @ViewChild('coffeeStyle') coffeeStyleInput;
   orderForm: NgForm;
 
   photoUrl: string;
@@ -27,7 +27,9 @@ export class OrderEditComponent implements OnInit {
     this.firstName = this.authService.currentUserDisplayName.split(' ', 1)[0];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+   // this.coffeeStyleInput.nativeElement.focus();
+  }
 
   createOrder() {
     if (!this.authService.authenticated) {
