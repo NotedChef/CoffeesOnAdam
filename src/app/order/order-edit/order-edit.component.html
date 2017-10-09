@@ -5,7 +5,7 @@
 <md-card fxLayoutAlign="center" fxLayout="column">
   <div>
     <form #orderForm="ngForm" novalidate fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="flex-start" fxLayoutGap="30px">
-      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle="ngModel" required >
+      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle required >
         <md-option *ngFor="let style of styles" [value]="style.value" autofocus>
           {{style.value}}
         </md-option>

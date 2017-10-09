@@ -1,5 +1,5 @@
-import { NgForm } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { OrderService } from '../order.service';
 import { Order } from '../order';
@@ -10,10 +10,10 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.css']
 })
-export class OrderEditComponent implements OnInit {
+export class OrderEditComponent implements OnInit, AfterViewInit {
   firstName: string;
-  @ViewChild('coffeeStyle') coffeeStyleInput;
-  orderForm: NgForm;
+  @ViewChild('coffeeStyle', {read: ElementRef}) coffeeStyle: ElementRef;
+  @ViewChild('orderForm') orderForm: NgForm;
 
   photoUrl: string;
   order: Order = new Order();
@@ -28,8 +28,12 @@ export class OrderEditComponent implements OnInit {
   }
 
   ngOnInit() {
-   // this.coffeeStyleInput.nativeElement.focus();
   }
+
+  ngAfterViewInit() {
+    console.log(this.coffeeStyle.nativeElement);
+    this.coffeeStyle.nativeElement.focus();
+}
 
   createOrder() {
     if (!this.authService.authenticated) {
@@ -48,6 +52,7 @@ export class OrderEditComponent implements OnInit {
     this.orderForm.form.markAsPristine();
     this.orderForm.form.markAsUntouched();
     this.orderForm.form.updateValueAndValidity();
+
   }
 
   generateSummary(order): string  {
