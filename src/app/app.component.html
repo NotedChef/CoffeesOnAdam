@@ -1,6 +1,6 @@
 <div>
   <md-toolbar color="primary">
-    <div fxLayoutAlign="space-between center" class="nav-buttons">
+    <div fxLayoutAlign="space-around center" class="nav-buttons">
       <md-icon>local_cafe</md-icon>
       <button md-button [routerLink]="['/home']"><h1>Have a coffee on SSW</h1></button>
       <div *ngIf="(authService.user$ | async)?.uid">

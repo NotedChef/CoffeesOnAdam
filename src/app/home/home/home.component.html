@@ -1,15 +1,11 @@
 <md-card>
-  <md-card-title>
-    Adam is shouting you a coffee
+  <md-card-title fxLayoutAlign="space-around center">
+    <span>Adam is shouting you a coffee</span>
   </md-card-title>
+  <md-card-subtitle fxLayoutAlign="space-around center" fxLayout="column">
+      <p *ngIf="!(authService.user$ | async)?.uid">Login with your google account to place order</p>
+      <button md-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!(authService.user$ | async)?.uid">LOGIN</button>
+      <button md-raised-button color="primary" [routerLink]="['/order']" *ngIf="(authService.user$ | async)?.uid">Place Order</button>
+  </md-card-subtitle>
   <img md-card-image src="https://pbs.twimg.com/profile_images/525629364088479744/0YAQNbyC_400x400.png" alt="Photo of Adam Cogan">
-  <md-card-content>
-    <p style="text-align: center;" *ngIf="!(authService.user$ | async)?.uid">
-      Login with your google account to place an order
-    </p>
-  </md-card-content>
-  <md-card-actions style="text-align: center;">
-    <button md-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!(authService.user$ | async)?.uid">LOGIN</button>
-    <button md-raised-button color="primary" [routerLink]="['/order']" *ngIf="(authService.user$ | async)?.uid">Place Order</button>
-  </md-card-actions>
 </md-card>
