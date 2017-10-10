@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
@@ -8,12 +9,13 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Injectable()
 export class AuthService {
   user$: Observable<firebase.User> = null;
-  authState: any = null;
+  authState: firebase.User = null;
 
   constructor(
       private router: Router,
       private afAuth: AngularFireAuth,
-      private db: AngularFireDatabase
+      private db: AngularFireDatabase,
+      private userService: UserService
      ) {
         this.user$ = this.afAuth.authState;
         this.afAuth.authState.subscribe((auth) =>
@@ -90,14 +92,23 @@ export class AuthService {
     // Writes user name and email to realtime db
     // useful if your app displays information about users or for admin features
 
-    const path = `users/${this.currentUserId}`; // Endpoint on firebase
-    const data = {
-      email: this.authState.email,
-      name: this.authState.displayName
-    };
-
-    this.db.object(path).update(data)
-      .catch(error => console.log(error));
+    if (this.userService.userExists(this.currentUserId)) {
+      // update user info
+      const data = {
+        email: this.authState.email,
+        name: this.authState.displayName
+      };
+      this.userService.updateUser(this.authState.uid, data);
+    } else {
+      // create new user entry
+      const data = {
+        $key: this.currentUserId,
+        email: this.authState.email,
+        name: this.authState.displayName,
+        isAdmin: false
+      };
+      this.userService.createUser(data);
+    }
 
   }
 

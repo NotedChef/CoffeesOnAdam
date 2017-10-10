@@ -1,3 +1,4 @@
+import { UserService } from './user/user.service';
 import { OrderDetailFullComponent } from './order/order-detail-full/order-detail-full.component';
 import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +22,9 @@ import { HomeComponent } from './home/home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AllOrdersListComponent } from './order/all-orders-list/all-orders-list.component';
 import { SummarizePipe } from './order/summarize.pipe';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { SummarizePipe } from './order/summarize.pipe';
     HomeComponent,
     AllOrdersListComponent,
     OrderDetailFullComponent,
-    SummarizePipe
+    SummarizePipe,
+    UserListComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,7 @@ import { SummarizePipe } from './order/summarize.pipe';
     FlexLayoutModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, OrderService, AuthGuard],
+  providers: [AuthService, OrderService, UserService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

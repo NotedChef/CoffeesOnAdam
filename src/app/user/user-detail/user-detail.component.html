@@ -1,0 +1,6 @@
+<div fxLayoutAlign="space-between">
+  {{user.name}} ({{user.email}})
+  <md-slide-toggle color="accent" [checked]="user.isAdmin"  (change)="updateIsAdmin()">
+  <span *ngIf="user.isAdmin === true">Admin</span>
+  </md-slide-toggle>
+</div>

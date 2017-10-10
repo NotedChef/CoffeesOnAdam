@@ -1,0 +1,13 @@
+<div style="margin-top: 15px" *ngIf="users$ | async">
+  <md-card fxLayoutAlign="center" fxLayout="column">
+    <md-card-title>
+        User Management
+    </md-card-title>
+    <!-- <md-card-subtitle>show only admins</md-card-subtitle> -->
+    <md-list *ngIf="users$ | async as users">
+      <md-list-item *ngFor="let user of users">
+        <app-user-detail [user]="user" fxFlex></app-user-detail>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</div>

@@ -11,7 +11,6 @@ import 'rxjs/add/operator/take';
 @Injectable()
 export class OrderService {
   subject$ = new BehaviorSubject<string>(undefined);
-  userOrders$: FirebaseListObservable<any[]>;
   orders$: FirebaseListObservable<Order[]> = null;
   order$: FirebaseObjectObservable<Order> = null;
   private basePath = '/Orders';
@@ -46,13 +45,6 @@ export class OrderService {
     // this.orders$.subscribe(order => console.log(order));
 
     return this.orders$;
-  }
-
-  getUserOrdersList(query = {}): FirebaseListObservable<any[]> {
-    this.userOrders$ = this.db.list('/userOrders/' + this.authService.currentUserId, {
-      query: query
-    });
-    return this.userOrders$;
   }
 
   // Return a single observable item
