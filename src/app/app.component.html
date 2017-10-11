@@ -1,11 +1,40 @@
+<md-menu #menu="mdMenu">
+  <button md-menu-item [routerLink]="['/home']">
+    <md-icon>home</md-icon>
+    <span>Home</span>
+  </button>
+  <button md-menu-item [routerLink]="['/order']" [disabled]="!authService.authenticated">
+    <md-icon>plus_one</md-icon>
+    <span>Place order</span>
+  </button>
+  <button md-menu-item [routerLink]="['/orders']" [disabled]="!authService.authenticated">
+    <md-icon>local_cafe</md-icon>
+    <span>All orders</span>
+  </button>
+  <button md-menu-item [routerLink]="['/admins']" *ngIf="authService.isAdmin">
+    <md-icon>people</md-icon>
+    <span>Admins</span>
+  </button>
+  <!-- <button md-menu-item disabled [routerLink]="['/users']">
+    <md-icon>map</md-icon>
+    <span>Local map</span>
+  </button> -->
+</md-menu>
 <div>
   <md-toolbar color="primary">
     <div fxLayoutAlign="space-around center" class="nav-buttons">
-      <md-icon>menu</md-icon>
-      <button md-button [routerLink]="['/home']"><h1>Have a coffee on SSW</h1></button>
+      <button md-icon-button [mdMenuTriggerFor]="menu">
+        <md-icon>menu</md-icon>
+      </button>
+      <button md-button [routerLink]="['/home']">
+        <h1>Firebootcamp Coffee</h1>
+      </button>
       <div *ngIf="(authService.user$ | async)?.uid">
         <button md-raised-button color="accent" (click)="authService.logout()">Logout</button>
       </div>
+      <div *ngIf="!(authService.user$ | async)?.uid">
+          <button md-raised-button color="accent"></button>
+        </div>
     </div>
   </md-toolbar>
   <div>

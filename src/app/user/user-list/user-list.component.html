@@ -1,13 +1,40 @@
 <div style="margin-top: 15px" *ngIf="users$ | async">
-  <md-card fxLayoutAlign="center" fxLayout="column">
+  <md-card>
     <md-card-title>
-        User Management
+      Manage Admins
     </md-card-title>
-    <!-- <md-card-subtitle>show only admins</md-card-subtitle> -->
-    <md-list *ngIf="users$ | async as users">
-      <md-list-item *ngFor="let user of users">
-        <app-user-detail [user]="user" fxFlex></app-user-detail>
-      </md-list-item>
-    </md-list>
+    <md-card-subtitle>Admins can delete all the orders</md-card-subtitle>
+    <md-card-content style="margin-top: 15px">
+      <form>
+        <md-form-field>
+          <input
+            type="text"
+            mdInput [mdAutocomplete]="auto"
+            placeholder="Add an Admin" width="200px"
+            #newAdminName
+            [formControl]="usersControl"
+          >
+
+        <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayName">
+          <md-option *ngFor="let user of filteredUsers | async" [value]="user">
+            {{ user.name }}
+          </md-option>
+        </md-autocomplete>
+      </md-form-field>
+
+        <button md-mini-fab (click)="addAdmin()" fxFlexAlign.gt-sm="" fxFlexAlign="center" [disabled]="newAdminName.value === ''">
+          <md-icon>add</md-icon>
+        </button>
+      </form>
+
+
+      <!-- add field to search for user to add them to the admins-->
+      <md-list *ngIf="admins">
+        <md-list-item *ngFor="let admin of admins">
+          <!-- show admins -->
+          <app-user-detail [user]="admin"></app-user-detail>
+        </md-list-item>
+      </md-list>
+    </md-card-content>
   </md-card>
 </div>

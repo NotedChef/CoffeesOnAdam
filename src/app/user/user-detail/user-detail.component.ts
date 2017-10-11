@@ -21,4 +21,9 @@ export class UserDetailComponent implements OnInit {
     this.userService.updateUser(this.user.$key, this.user);
   }
 
+  removeAdmin(): void {
+    this.user.isAdmin = false;
+    this.userService.updateUser(this.user.$key, this.user);
+  }
+
 }

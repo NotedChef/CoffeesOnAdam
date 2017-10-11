@@ -1,3 +1,4 @@
+import { AdminGuard } from './auth/admin.guard';
 import { UserService } from './user/user.service';
 import { OrderDetailFullComponent } from './order/order-detail-full/order-detail-full.component';
 import 'hammerjs';
@@ -12,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from './auth/auth.service';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { OrderEditComponent } from './order/order-edit/order-edit.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
@@ -24,6 +25,7 @@ import { AllOrdersListComponent } from './order/all-orders-list/all-orders-list.
 import { SummarizePipe } from './order/summarize.pipe';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { DeleteConfirmationDialogComponent } from './order/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 
 @NgModule({
@@ -37,20 +39,23 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
     OrderDetailFullComponent,
     SummarizePipe,
     UserListComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    DeleteConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     MaterialModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
-  providers: [AuthService, OrderService, UserService, AuthGuard],
+  entryComponents: [DeleteConfirmationDialogComponent],
+  providers: [AuthService, OrderService, UserService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

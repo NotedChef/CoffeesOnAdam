@@ -25,6 +25,9 @@ export class AppComponent {
     //   error => console.log('error: ', error),
     //   () => console.log('Completed')
     // );
+  }
 
+  isAdmin(): boolean {
+    return this.authService.isAdmin;
   }
 }

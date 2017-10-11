@@ -12,8 +12,12 @@ import { MdButtonModule,
   MdTabsModule,
   MdChipsModule,
   MatFormFieldModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatTooltipModule,
+  MatDialogModule,
+  MatAutocompleteModule
  } from '@angular/material';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   imports: [MdButtonModule,
@@ -28,7 +32,10 @@ import { MdButtonModule,
   MdTabsModule,
   MdChipsModule,
   MatFormFieldModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatTooltipModule,
+  MatDialogModule,
+  MatAutocompleteModule
 ],
   exports: [MdButtonModule,
   MdMenuModule,
@@ -42,7 +49,12 @@ import { MdButtonModule,
   MdTabsModule,
   MdChipsModule,
   MatFormFieldModule,
-  MatSlideToggleModule],
+  MatSlideToggleModule,
+  MatTooltipModule,
+  MatDialogModule,
+  MatAutocompleteModule
+  ],
+  declarations: [SidenavComponent],
 })
 export class MaterialModule { }
 

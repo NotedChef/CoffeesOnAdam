@@ -1,3 +1,4 @@
+import { AdminGuard } from './auth/admin.guard';
 import { AllOrdersListComponent } from './order/all-orders-list/all-orders-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { UserListComponent } from './user/user-list/user-list.component';
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'order', component: OrderEditComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: AllOrdersListComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
+  { path: 'admins', component: UserListComponent, canActivate: [AdminGuard] },
 
   { path: '**', component: HomeComponent}
 

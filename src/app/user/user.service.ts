@@ -1,5 +1,5 @@
 import { User } from './user';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
@@ -20,7 +20,7 @@ export class UserService {
 
   updateUser(key: string, value: any): void {
     this.users$.update(key, value)
-      .then(_ => console.log('Updated user info'))
+      .then(_ => console.log('Updated user info', value))
       .catch(error => this.handleError(error));
   }
 
@@ -30,11 +30,24 @@ export class UserService {
       .catch(error => this.handleError(error));
   }
 
+  getUser(uid: string): FirebaseObjectObservable<User> {
+    return this.db.object(`/users/${uid}`);
+  }
+
   userExists(uid: string): boolean {
     let retval: boolean;
     this.db.object(`/users/${uid}`).first().subscribe (x =>
       x.$exists() ?  retval = true : retval = false
     );
+    return retval;
+  }
+
+  isAdmin(uid: string): boolean {
+    let retval: boolean;
+    this.getUser(uid)
+      .subscribe(user => {
+          retval = user.isAdmin;
+      });
     return retval;
   }
 

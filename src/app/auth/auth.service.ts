@@ -42,9 +42,19 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
+
   // Returns true if user is logged in
   get authenticated(): boolean {
     return this.authState !== null;
+  }
+
+  get isAdmin(): boolean {
+   // console.log('authService.isAdmin: ', this.currentUserId);
+
+    if (this.authenticated) {
+      return this.userService.isAdmin(this.currentUserId);
+    }
+    return false;
   }
 
   // Returns current user data
