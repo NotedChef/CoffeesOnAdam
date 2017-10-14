@@ -6,6 +6,8 @@ import { User } from '../user';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-user-list',
@@ -17,11 +19,13 @@ export class UserListComponent implements OnInit {
   users: User[];
   admins$: FirebaseListObservable<User[]>;
   admins: User[];
+
   usersControl: FormControl = new FormControl();
   filteredUsers: Observable<User[]>;
 
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
     // non-admins
@@ -39,9 +43,12 @@ export class UserListComponent implements OnInit {
 
     this.filteredUsers = this.usersControl.valueChanges
     .startWith(null)
-    .map(user => user && typeof user === 'object' ? user.name : user)
+    .map(userSearch => userSearch && typeof userSearch === 'object' ? userSearch.name : userSearch)
     .map(name => name ? this.filter(name) : this.users.slice());
-    }
+
+    const allUsers$ = Observable.combineLatest(this.users$, this.admins$);
+    allUsers$.subscribe(([users, adminUsers]) => console.log('users: ', users, 'adminUsers', adminUsers));
+  }
 
   filter(name: string): User[] {
     return this.users

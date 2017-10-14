@@ -4,6 +4,7 @@ import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable }
 import { OrderService } from '../order.service';
 import { Order } from '../order';
 import { AuthService } from '../../auth/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-order-edit',
@@ -11,6 +12,7 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./order-edit.component.css']
 })
 export class OrderEditComponent implements OnInit, AfterViewInit {
+  snackBar: MatSnackBar;
   firstName: string;
   @ViewChild('coffeeStyle', {read: ElementRef}) coffeeStyle: ElementRef;
   @ViewChild('orderForm') orderForm: NgForm;
@@ -22,7 +24,10 @@ export class OrderEditComponent implements OnInit, AfterViewInit {
   sizes = [{value: 'Small'}, {value: 'Regular'}, {value: 'Large'} ];
   milks = [{value: 'Full'}, {value: 'Skinny'}, {value: 'Soy'}, {value: 'Almond'}];
 
-  constructor(private orderService: OrderService, private authService: AuthService) {
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService,
+    private snackbar: MatSnackBar) {
     this.photoUrl = this.authService.currentUserImageUrl;
     this.firstName = this.authService.currentUserDisplayName.split(' ', 1)[0];
   }
@@ -53,6 +58,8 @@ export class OrderEditComponent implements OnInit, AfterViewInit {
     this.orderForm.form.markAsUntouched();
     this.orderForm.form.updateValueAndValidity();
 
+    this.alert('Your order has been placed and will be delivered shortly.');
+
   }
 
   generateSummary(order): string  {
@@ -62,6 +69,10 @@ export class OrderEditComponent implements OnInit, AfterViewInit {
     }
     summary += ' ' + order.style;
     return summary;
+  }
+
+  private alert(message: string) {
+    this.snackbar.open(message, 'GOT IT!', { duration: 5000, verticalPosition: 'top', politeness: 'polite' });
   }
 
 

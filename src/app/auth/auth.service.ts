@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserService } from './../user/user.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
@@ -5,11 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { User } from '../user/user';
 
 @Injectable()
 export class AuthService {
   user$: Observable<firebase.User> = null;
   authState: firebase.User = null;
+  // private authState2;
+  // public authStateSource = new BehaviorSubject<any>(null);
+  // public authState$ = this.authStateSource.asObservable();
 
   constructor(
       private router: Router,
@@ -18,9 +23,23 @@ export class AuthService {
       private userService: UserService
      ) {
         this.user$ = this.afAuth.authState;
-        this.afAuth.authState.subscribe((auth) =>
-          this.authState = auth
-        );
+        this.afAuth.authState.subscribe((auth) => {
+          this.authState = auth;
+          console.log('authState: ', this.authState);
+
+          if (auth && auth.uid) {
+            this.db.object(`users/${auth.uid}`)
+              .first()
+              .subscribe(admin => {
+                if (admin.isAdmin === true) {
+                  auth['admin'] = admin;
+                  console.log(`user is an admin so setting auth['admin']`);
+                }
+              },
+              error => this.errorHandler(error)
+            );
+          }
+        });
       }
 
   googleLogin() {
@@ -30,14 +49,15 @@ export class AuthService {
 
   private socialSignIn(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-      .then(_ => {
+      .then((credential) => {
+        this.authState = credential.user;
+        this.checkIfUserExists(this.authState);
         this.router.navigate(['order']);
-        this.updateUserData();
       })
       .catch(error => console.log('authentication error: ', error));
   }
 
-  logout() {
+  logout(): void {
     this.afAuth.auth.signOut();
     this.router.navigate(['']);
   }
@@ -49,8 +69,7 @@ export class AuthService {
   }
 
   get isAdmin(): boolean {
-   // console.log('authService.isAdmin: ', this.currentUserId);
-
+     // console.log('authService.isAdmin: ', this.currentUserId);
     if (this.authenticated) {
       return this.userService.isAdmin(this.currentUserId);
     }
@@ -98,28 +117,47 @@ export class AuthService {
 
    //// Helpers ////
 
-   private updateUserData(): void {
+   private updateUserData(user: firebase.User): void {
     // Writes user name and email to realtime db
-    // useful if your app displays information about users or for admin features
-
-    if (this.userService.userExists(this.currentUserId)) {
-      // update user info
       const data = {
         email: this.authState.email,
         name: this.authState.displayName
       };
       this.userService.updateUser(this.authState.uid, data);
-    } else {
+
+    }
+
+  private addNewUserRecord() {
       // create new user entry
-      const data = {
-        $key: this.currentUserId,
+      const user = {
+        $key: this.authState.uid,
         email: this.authState.email,
         name: this.authState.displayName,
         isAdmin: false
       };
-      this.userService.createUser(data);
-    }
+      this.userService.createUser(user);
+  }
 
+  private checkIfUserExists(auth: firebase.User) {
+    // console.log(`checkifuserexists(${auth.uid})`);
+    return this.db.object(`users/${auth.uid}`)
+      .first()
+      .subscribe(
+      data => {
+        if (data.$value !== null) {
+          console.log('User does exist', data);
+          this.updateUserData(data);
+        } else {
+          console.log('new user, will add record');
+          this.addNewUserRecord();
+        }
+      },
+      error => this.errorHandler(error)
+      );
+  }
+
+  private errorHandler(error: any) {
+    console.log(error);
   }
 
 

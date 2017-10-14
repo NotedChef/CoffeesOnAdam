@@ -3,14 +3,16 @@
     <md-icon>home</md-icon>
     <span>Home</span>
   </button>
-  <button md-menu-item [routerLink]="['/order']" [disabled]="!authService.authenticated">
+
+  <button md-menu-item [routerLink]="['/order']" [disabled]="!auth">
     <md-icon>plus_one</md-icon>
     <span>Place order</span>
   </button>
-  <button md-menu-item [routerLink]="['/orders']" [disabled]="!authService.authenticated">
+  <button md-menu-item [routerLink]="['/orders']" [disabled]="!auth">
     <md-icon>local_cafe</md-icon>
     <span>All orders</span>
   </button>
+
   <button md-menu-item [routerLink]="['/admins']" *ngIf="authService.isAdmin">
     <md-icon>people</md-icon>
     <span>Admins</span>

@@ -3,14 +3,17 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth/auth.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  auth: any;
 
   constructor (private afd: AngularFireDatabase, public authService: AuthService) {
+    this.authService.user$.subscribe(auth => this.auth = auth);
 
     // this.items = afd.list(`/Orders`, {query: {orderByChild: 'name'}});
     // this.items

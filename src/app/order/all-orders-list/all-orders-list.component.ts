@@ -31,9 +31,11 @@ export class AllOrdersListComponent implements OnInit {
     this.orders$.subscribe(
       order => this.numOrders = order.length
     );
+    // DO NOT DELETE - TODO: - going to move this to the service and use instead of summarize pipe
     // this.orders$.forEach(order => console.log(order));
     // this.orderListSummary$ = this.orders$ as Observable<any[]>;
     // this.orderListSummary$
+      /// need to add something here to get the array into it's own observable - Observable.from([])
     //   .map(order => order[0].summary);
       // .groupBy(order => order.summary)
       // .mergeMap(group => group.reduce((acc, curr) =>
@@ -45,7 +47,7 @@ export class AllOrdersListComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
-      width: '250px'
+      width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

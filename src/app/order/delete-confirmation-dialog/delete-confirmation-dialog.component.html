@@ -1,8 +1,8 @@
-<h1 md-dialog-title>Delete all orders</h1>
+<h1 md-dialog-title>Delete all orders?</h1>
 <div md-dialog-content>
-  <p>Are you sure you want to delete all the current orders?</p>
+  <p>Make sure the orders have been delivered before deleting them all.</p>
 </div>
-<div md-dialog-actions>
-  <button md-button (click)="dialogRef.close(true)" tabindex="2">Yes</button>
-  <button md-button (click)="dialogRef.close()" tabindex="-1">No</button>
+<div md-dialog-actions align="end">
+  <button md-button color="warn" (click)="dialogRef.close(true)" tabindex="-1">DELETE</button>
+  <button md-button color="primary" (click)="dialogRef.close()" tabindex="2">CANCEL</button>
 </div>

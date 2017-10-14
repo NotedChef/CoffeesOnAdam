@@ -3,9 +3,9 @@
     <span>Adam is shouting you a coffee</span>
   </md-card-title>
   <md-card-subtitle fxLayoutAlign="space-around center" fxLayout="column">
-      <p *ngIf="!(authService.user$ | async)?.uid">Login with your google account to place order</p>
-      <button md-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!(authService.user$ | async)?.uid">LOGIN</button>
-      <button md-raised-button color="primary" [routerLink]="['/order']" *ngIf="(authService.user$ | async)?.uid">Place Order</button>
+      <p *ngIf="!auth">Login with your google account to place order</p>
+      <button md-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!auth">LOGIN</button>
+      <button md-raised-button color="primary" [routerLink]="['/order']" *ngIf="auth">Place Order</button>
   </md-card-subtitle>
   <img md-card-image src="https://pbs.twimg.com/profile_images/525629364088479744/0YAQNbyC_400x400.png" alt="Photo of Adam Cogan">
 </md-card>

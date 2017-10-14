@@ -9,7 +9,9 @@ import 'rxjs/add/operator/first';
 export class UserService {
   private users$: FirebaseListObservable<User[]> = null;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) {
+    this.users$ = this.db.list('/users');
+   }
 
   getUsersList(query = {}): FirebaseListObservable<User[]> {
     this.users$ = this.db.list('/users', {
@@ -19,15 +21,20 @@ export class UserService {
   }
 
   updateUser(key: string, value: any): void {
-    this.users$.update(key, value)
+    this.db.list('/users').update(key, value)
       .then(_ => console.log('Updated user info', value))
       .catch(error => this.handleError(error));
   }
 
   createUser(user: User): void {
-    this.users$.push(user)
-      .then(_ => console.log('Created new user: ' + user))
-      .catch(error => this.handleError(error));
+    console.log('createUser: ', user);
+    this.db.object(`/users/${user.$key}`).set({
+      name: user.name,
+      isAdmin: user.isAdmin,
+      email: user.email
+    })
+    .then(_ => console.log('Created new user: ', user))
+    .catch(error => this.handleError(error));
   }
 
   getUser(uid: string): FirebaseObjectObservable<User> {
@@ -36,9 +43,14 @@ export class UserService {
 
   userExists(uid: string): boolean {
     let retval: boolean;
-    this.db.object(`/users/${uid}`).first().subscribe (x =>
-      x.$exists() ?  retval = true : retval = false
+    console.log(`/users/${uid}`);
+    this.db.object(`/users/${uid}`).first()
+      .subscribe (x => {
+        console.log('userExists|user', x);
+        x.$exists() ?  retval = true : retval = false;
+      }
     );
+    console.log('UserService.userExists: ', retval);
     return retval;
   }
 

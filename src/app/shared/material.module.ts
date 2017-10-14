@@ -15,7 +15,8 @@ import { MdButtonModule,
   MatSlideToggleModule,
   MatTooltipModule,
   MatDialogModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSnackBarModule
  } from '@angular/material';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
@@ -35,7 +36,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   MatSlideToggleModule,
   MatTooltipModule,
   MatDialogModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSnackBarModule
 ],
   exports: [MdButtonModule,
   MdMenuModule,
@@ -52,7 +54,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   MatSlideToggleModule,
   MatTooltipModule,
   MatDialogModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSnackBarModule
   ],
   declarations: [SidenavComponent],
 })

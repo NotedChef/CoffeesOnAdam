@@ -6,3 +6,8 @@ md-divider {
 md-list {
   margin-top: 20px;
 }
+
+md-list h4 {
+  color: #673ab7;
+  margin: 16px;
+}
