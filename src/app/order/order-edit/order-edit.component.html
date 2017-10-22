@@ -1,11 +1,13 @@
-<div class="header" fxFlexAlign="center">
-  <img class="avatar" src="{{photoUrl}}" *ngIf="photoUrl" fxFlexAlign="center">
-  <h3 style="display: inline" fxFlexAlign="center">Welcome {{firstName}} - place your order</h3>
+<div fxLayout="row" class="header">
+  <img class="avatar_md" src="{{photoUrl}}" *ngIf="photoUrl" fxFlexAlign="center">
+  <h1 style="display: inline" fxFlexAlign="center">Welcome {{firstName}}</h1>
 </div>
+
 <md-card fxLayoutAlign="center" fxLayout="column">
+  <md-card-title>PLACE AN ORDER</md-card-title>
   <div>
     <form #orderForm="ngForm" novalidate fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="flex-start" fxLayoutGap="30px">
-      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle required >
+      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle required>
         <md-option *ngFor="let style of styles" [value]="style.value" autofocus>
           {{style.value}}
         </md-option>
@@ -17,23 +19,17 @@
         </md-option>
       </md-select>
 
-      <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk"
-          *ngIf="coffeeStyle.value !== 'Long Black' && coffeeStyle.value !== '' " >
+      <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk" *ngIf="coffeeStyle.value !== 'Long Black' && coffeeStyle.value !== '' ">
         <md-option *ngFor="let milk of milks" [value]="milk.value">
           {{milk.value}}
         </md-option>
       </md-select>
-      <button
-        md-mini-fab (click)="createOrder()"
-        fxFlexAlign.gt-sm="" fxFlexAlign="center"
-        [disabled]="!orderForm.form.valid">
-          <md-icon>add</md-icon>
-        </button>
+      <button md-mini-fab (click)="createOrder()" fxFlexAlign.gt-sm="" fxFlexAlign="center" [disabled]="!orderForm.form.valid">
+        <md-icon>done</md-icon>
+      </button>
     </form>
-    </div>
-  <div>
-    <!-- list of user's orders -->
-    <app-order-list></app-order-list>
   </div>
 </md-card>
 
+<!-- list of user's orders -->
+<app-order-list></app-order-list>

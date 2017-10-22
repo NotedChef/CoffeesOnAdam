@@ -18,7 +18,7 @@ export class OrderListComponent implements OnInit {
   }
 
   ngOnInit() {
-
+     this.orders$.subscribe(o => console.log('Orders: ', o));
   }
 
 }
