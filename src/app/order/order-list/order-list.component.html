@@ -1,10 +1,24 @@
-<md-card  *ngIf="(orders$ | async)">
-  <md-card-title>SUBMITTED ORDERS</md-card-title>
-  <md-card-content>
-    <md-list>
-      <md-list-item *ngFor="let o of orders$ | async">
-        <app-order-detail [order]='o'></app-order-detail>
-      </md-list-item>
-    </md-list>
-  </md-card-content>
-</md-card>
+<div *ngIf="orders !== null">
+  <div *ngIf="orders.length > 0">
+    <md-card >
+      <md-card-title>SUBMITTED ORDERS</md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item *ngFor="let o of orders">
+            <app-order-detail [order]='o'></app-order-detail>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </div>
+  
+  <div *ngIf="orders.length === 0">
+    <md-card >
+        <md-card-content>
+       <h2>You have not submitted any orders yet</h2>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+
+
