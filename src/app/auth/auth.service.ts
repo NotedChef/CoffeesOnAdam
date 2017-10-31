@@ -39,7 +39,7 @@ export class AuthService {
         this.user$ = this.afAuth.authState;
         this.afAuth.authState.subscribe((auth) => {
           this.authState = auth;
-          console.log('authState: ', this.authState);
+          // console.log('authState: ', this.authState);
 
           if (auth && auth.uid) {
             this.db.object(`users/${auth.uid}`)
@@ -47,7 +47,7 @@ export class AuthService {
               .subscribe(admin => {
                 if (admin.isAdmin === true) {
                   auth['admin'] = admin;
-                  console.log(`user is an admin so setting auth['admin']`);
+                  // console.log(`user is an admin so setting auth['admin']`);
                 }
               },
               error => this.errorHandler(error)
@@ -159,10 +159,10 @@ export class AuthService {
       .subscribe(
       data => {
         if (data.$value !== null) {
-          console.log('User does exist', data);
+          // console.log('User does exist', data);
           this.updateUserData(data);
         } else {
-          console.log('new user, will add record');
+          // console.log('new user, will add record');
           this.addNewUserRecord();
         }
       },

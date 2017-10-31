@@ -36,7 +36,7 @@ export class OrderEditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.coffeeStyle.nativeElement);
+    // console.log(this.coffeeStyle.nativeElement);
     this.coffeeStyle.nativeElement.focus();
 }
 

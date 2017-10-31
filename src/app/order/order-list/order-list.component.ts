@@ -23,7 +23,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ordersSubscription = this.orderService.getOrdersByUserId()
       .subscribe(o => {
-          console.log(o);
+          // console.log(o);
           this.orders = o;
       });
   }

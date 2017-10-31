@@ -51,7 +51,7 @@ export class AllOrdersListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+      // console.log('The dialog was closed', result);
       if (result) {
         this.orders$.remove()
           .then(_ => console.log('Deleted all orders'))

@@ -19,7 +19,7 @@ export class AdminGuard implements CanActivate {
       .map(user => !!user && user.isAdmin === true)
       .do(isAdmin => {
         if(!isAdmin) {
-          // console.log('Access denied because not an Admin');
+          console.log('Access denied because not an Admin');
           this.router.navigate(['/home']);
         }
       })

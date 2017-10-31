@@ -3,7 +3,8 @@
     ".write": "auth != null",
 
       "users" : {
-    		".read": "auth != null"
+        ".read": "auth != null",
+        ".indexOn": "isAdmin"
     	},
 
       "Orders": {

@@ -22,18 +22,18 @@ export class UserService {
 
   updateUser(key: string, value: any): void {
     this.db.list('/users').update(key, value)
-      .then(_ => console.log('Updated user info', value))
+      // .then(_ => console.log('Updated user info', value))
       .catch(error => this.handleError(error));
   }
 
   createUser(user: User): void {
-    console.log('createUser: ', user);
+    //console.log('createUser: ', user);
     this.db.object(`/users/${user.$key}`).set({
       name: user.name,
       isAdmin: user.isAdmin,
       email: user.email
     })
-    .then(_ => console.log('Created new user: ', user))
+    //.then(_ => console.log('Created new user: ', user))
     .catch(error => this.handleError(error));
   }
 
@@ -43,14 +43,14 @@ export class UserService {
 
   userExists(uid: string): boolean {
     let retval: boolean;
-    console.log(`/users/${uid}`);
+    // console.log(`/users/${uid}`);
     this.db.object(`/users/${uid}`).first()
       .subscribe (x => {
-        console.log('userExists|user', x);
+        // console.log('userExists|user', x);
         x.$exists() ?  retval = true : retval = false;
       }
     );
-    console.log('UserService.userExists: ', retval);
+   // console.log('UserService.userExists: ', retval);
     return retval;
   }
 
