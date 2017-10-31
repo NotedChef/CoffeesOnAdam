@@ -7,11 +7,15 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from '../user/user';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+
 
 @Injectable()
 export class AuthService {
   user$: Observable<firebase.User> = null;
   authState: firebase.User = null;
+  internalUser$: Observable<User>;
   // private authState2;
   // public authStateSource = new BehaviorSubject<any>(null);
   // public authState$ = this.authStateSource.asObservable();
@@ -22,6 +26,16 @@ export class AuthService {
       private db: AngularFireDatabase,
       private userService: UserService
      ) {
+        this.internalUser$ = this.afAuth.authState
+          .switchMap(user => {
+            if(user) {
+              return this.userService.getUser(user.uid);
+            } else {
+              return Observable.of(null);
+            }
+          })
+
+
         this.user$ = this.afAuth.authState;
         this.afAuth.authState.subscribe((auth) => {
           this.authState = auth;

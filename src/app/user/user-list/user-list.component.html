@@ -1,4 +1,4 @@
-<div style="margin-top: 15px" *ngIf="users$ | async">
+<div style="margin-top: 15px" *ngIf="nonAdmins$ | async">
   <md-card>
     <md-card-title>
       Manage Admins
@@ -10,13 +10,13 @@
           <input
             type="text"
             mdInput [mdAutocomplete]="auto"
-            placeholder="Add an Admin" width="200px"
+            placeholder="Add an Admin" width="250px"
             #newAdminName
             [formControl]="usersControl"
           >
 
         <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayName">
-          <md-option *ngFor="let user of filteredUsers | async" [value]="user">
+          <md-option *ngFor="let user of filteredUsers$ | async" [value]="user">
             {{ user.name }}
           </md-option>
         </md-autocomplete>
@@ -32,7 +32,7 @@
       <md-list *ngIf="admins">
         <md-list-item *ngFor="let admin of admins">
           <!-- show admins -->
-          <app-user-detail [user]="admin"></app-user-detail>
+          <app-user-detail [user]="admin" (delAdminEvent)="adminDeleted($event);"></app-user-detail>
         </md-list-item>
       </md-list>
     </md-card-content>

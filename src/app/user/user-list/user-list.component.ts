@@ -15,13 +15,13 @@ import 'rxjs/add/observable/combineLatest';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users$: FirebaseListObservable<User[]>;
-  users: User[];
+  nonAdmins$: FirebaseListObservable<User[]>;
+  nonAdmins: User[];
   admins$: FirebaseListObservable<User[]>;
   admins: User[];
 
   usersControl: FormControl = new FormControl();
-  filteredUsers: Observable<User[]>;
+  filteredUsers$: Observable<User[]>;
 
 
   constructor(private userService: UserService) {
@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     // non-admins
-    this.users$ = this.userService.getUsersList({
+    this.nonAdmins$ = this.userService.getUsersList({
       orderByChild: 'isAdmin',
       equalTo: false
     });
@@ -39,19 +39,19 @@ export class UserListComponent implements OnInit {
       equalTo: true
     });
     this.admins$.subscribe(admins => this.admins = admins);
-    this.users$.subscribe(users => this.users = users);
+    this.nonAdmins$.subscribe(nonAdmins => this.nonAdmins = nonAdmins);
 
-    this.filteredUsers = this.usersControl.valueChanges
+    this.filteredUsers$ = this.usersControl.valueChanges
     .startWith(null)
     .map(userSearch => userSearch && typeof userSearch === 'object' ? userSearch.name : userSearch)
-    .map(name => name ? this.filter(name) : this.users.slice());
+    .map(name => name ? this.filterOnName(name) : this.nonAdmins.slice());
 
-    const allUsers$ = Observable.combineLatest(this.users$, this.admins$);
-    allUsers$.subscribe(([users, adminUsers]) => console.log('users: ', users, 'adminUsers', adminUsers));
+    // const allUsers$ = Observable.combineLatest(this.nonAdmins$, this.admins$);
+    // allUsers$.subscribe(([nonAdmins, adminUsers]) => console.log('NonAdmins: ', nonAdmins, 'Admins', adminUsers));
   }
 
-  filter(name: string): User[] {
-    return this.users
+  filterOnName(name: string): User[] {
+    return this.nonAdmins
     .filter(user => user.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
@@ -65,6 +65,12 @@ export class UserListComponent implements OnInit {
     newAdmin.isAdmin = true;
     this.userService.updateUser(newAdmin.$key, newAdmin);
     this.usersControl.reset();
+  }
+
+  adminDeleted(uid:string) {
+    // an admin was deleted in the child list, so list of users bound to 
+    // console.log("Deleted admin with uid of: ", uid);
+    this.filteredUsers$ = this.nonAdmins$;
   }
 
 }
