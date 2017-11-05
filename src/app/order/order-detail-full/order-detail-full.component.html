@@ -1,4 +1,3 @@
 <img mdAvatar class="avatar" src="{{order.imageUrl}}" *ngIf="order?.imageUrl">
 <img mdAvatar class="avatar" src="../../../assets/user-64.png" *ngIf="!order?.imageUrl">
-
-{{order.name}} - {{order.summary}}
+ {{(order.name).substring(0,order.name.indexOf(' ') + 2)}} - {{order.summary}}

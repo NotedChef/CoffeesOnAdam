@@ -5,7 +5,7 @@ import { FirebaseListObservable } from 'angularfire2/database';
 import { OrderService } from './../order.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../order';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/groupBy';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
@@ -18,31 +18,21 @@ import 'rxjs/add/operator/do';
 })
 export class AllOrdersListComponent implements OnInit {
   numOrders: number;
-  // orderListSummary$: any;
+  ordersSummaryList$: Observable<Order[]>;
   orders$: FirebaseListObservable<Order[]>;
 
-
-  constructor(private orderService: OrderService, public dialog: MatDialog, public authService: AuthService) { }
+  constructor(
+    private orderService: OrderService,
+    public dialog: MatDialog,
+    public authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.orders$ = this.orderService.getOrdersList({
       orderByChild: 'name'
     });
-    this.orders$.subscribe(
-      order => this.numOrders = order.length
-    );
-    // DO NOT DELETE - TODO: - going to move this to the service and use instead of summarize pipe
-    // this.orders$.forEach(order => console.log(order));
-    // this.orderListSummary$ = this.orders$ as Observable<any[]>;
-    // this.orderListSummary$
-      /// need to add something here to get the array into it's own observable - Observable.from([])
-    //   .map(order => order[0].summary);
-      // .groupBy(order => order.summary)
-      // .mergeMap(group => group.reduce((acc, curr) =>
-      //     [...acc, ...curr], []
-      // ));
-    //   .map(val => val.length + ' X ' + val[0].summary);
-    // this.orderListSummary$.forEach(item => console.log(item));
+    this.orders$.subscribe(order => (this.numOrders = order.length));
+    this.ordersSummaryList$ = this.orderService.getOrdersSummaryList();
   }
 
   openDialog(): void {
@@ -53,15 +43,11 @@ export class AllOrdersListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed', result);
       if (result) {
-        this.orders$.remove()
+        this.orders$
+          .remove()
           .then(_ => console.log('Deleted all orders'))
           .catch(error => console.log('Error deleting all orders: ', error));
       }
     });
-
-
-
-
   }
-
 }

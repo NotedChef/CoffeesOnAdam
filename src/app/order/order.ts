@@ -5,6 +5,7 @@ export class Order {
   imageUrl: string;
   style: string;
   size: string;
-  milk = 'Full';
+  milk: string;
+  shots = 1;
   summary: string;
 }

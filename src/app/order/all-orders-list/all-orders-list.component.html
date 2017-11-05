@@ -1,43 +1,42 @@
 <div style="margin-top: 15px" *ngIf="(orders$ | async) as orders">
-    <mat-card>
-      <div matTooltip="Delete all!" matTooltipPosition="above" class="btnBottomRight"
-        *ngIf="authService.isAdmin"
-      >
-        <button mat-fab (click)="openDialog()">
-            <mat-icon>delete_sweep</mat-icon>
-        </button>
-      </div>
-      <mat-card-title fxLayoutAlign="flex-start center" fxLayoutGap="10px">
-          <span>All orders</span>
-          <!-- <div class="numberCircle"><span>{{numOrders}}</span></div> -->
-          <mat-chip-list><mat-chip class="primary" selectable="false" >{{numOrders}}</mat-chip></mat-chip-list>
-      </mat-card-title>
-      <mat-card-subtitle>Realtime list of all orders</mat-card-subtitle>
-      <mat-card-content>
-        <mat-tab-group class="tab-group">
-            <mat-tab label="Order Summary">
-              <div class="tab-content">
-                <mat-list *ngIf="(orders$ | async | summarize) as summaryList">
-                  <mat-list-item *ngFor="let item of summaryList">
-                    {{item.summary}}
-                  </mat-list-item>
-                </mat-list>
-              </div>
-            </mat-tab>
-            <mat-tab label="All Orders">
-                <ng-template mat-tab-label>
-                  All Orders
-                </ng-template>
-                <div class="tab-content">
-                  <mat-list *ngIf="orders">
-                    <mat-list-item *ngFor="let o of orders">
-                      <app-order-detail-full [order]='o'></app-order-detail-full>
-                    </mat-list-item>
-                  </mat-list>
-                </div>
-              </mat-tab>
-          </mat-tab-group>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
+  <mat-card>
+    <div matTooltip="Delete all!" matTooltipPosition="above" class="btnBottomRight" *ngIf="authService.isAdmin">
+      <button mat-fab (click)="openDialog()">
+        <mat-icon>delete_sweep</mat-icon>
+      </button>
+    </div>
+    <mat-card-title fxLayoutAlign="flex-start center" fxLayoutGap="10px">
+      <span>All orders</span>
+      <!-- <div class="numberCircle"><span>{{numOrders}}</span></div> -->
+      <mat-chip-list>
+        <mat-chip class="primary" selectable="false">{{numOrders}}</mat-chip>
+      </mat-chip-list>
+    </mat-card-title>
+    <mat-card-subtitle>Realtime list of all orders</mat-card-subtitle>
+    <mat-card-content>
+      <mat-tab-group class="tab-group">
+        <mat-tab label="Order Summary">
+          <div class="tab-content">
+            <mat-list *ngIf="(ordersSummaryList$ | async ) as summaryList">
+              <mat-list-item *ngFor="let item of summaryList">
+                {{item.summary}}
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-tab>
+        <mat-tab label="All Orders">
+          <ng-template mat-tab-label>
+            All Orders
+          </ng-template>
+          <div class="tab-content">
+            <mat-list *ngIf="orders">
+              <mat-list-item *ngFor="let o of orders">
+                <app-order-detail-full [order]='o'></app-order-detail-full>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
