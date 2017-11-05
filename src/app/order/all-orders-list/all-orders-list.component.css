@@ -6,7 +6,7 @@
   padding: 0 16px;
 }
 
-md-chip.primary {
+mat-chip.primary {
   font-size: 20px;
   font-weight: bold;
   color: white;

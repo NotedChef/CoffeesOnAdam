@@ -3,33 +3,33 @@
   <h1 style="display: inline" fxFlexAlign="center">Welcome {{firstName}}</h1>
 </div>
 
-<md-card fxLayoutAlign="center" fxLayout="column">
-  <md-card-title>PLACE AN ORDER</md-card-title>
+<mat-card fxLayoutAlign="center" fxLayout="column">
+  <mat-card-title>PLACE AN ORDER</mat-card-title>
   <div>
     <form #orderForm="ngForm" novalidate fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="flex-start" fxLayoutGap="30px">
-      <md-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle required>
-        <md-option *ngFor="let style of styles" [value]="style.value" autofocus>
+      <mat-select placeholder="Coffee Style" [(ngModel)]="order.style" name="style" #coffeeStyle required>
+        <mat-option *ngFor="let style of styles" [value]="style.value" autofocus>
           {{style.value}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
 
-      <md-select placeholder="Size" [(ngModel)]="order.size" name="size" required>
-        <md-option *ngFor="let size of sizes" [value]="size.value">
+      <mat-select placeholder="Size" [(ngModel)]="order.size" name="size" required>
+        <mat-option *ngFor="let size of sizes" [value]="size.value">
           {{size.value}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
 
-      <md-select placeholder="Milk" [(ngModel)]="order.milk" name="milk" *ngIf="coffeeStyle.value !== 'Long Black' && coffeeStyle.value !== '' ">
-        <md-option *ngFor="let milk of milks" [value]="milk.value">
+      <mat-select placeholder="Milk" [(ngModel)]="order.milk" name="milk" *ngIf="coffeeStyle.value !== 'Long Black' && coffeeStyle.value !== '' ">
+        <mat-option *ngFor="let milk of milks" [value]="milk.value">
           {{milk.value}}
-        </md-option>
-      </md-select>
-      <button md-mini-fab (click)="createOrder()" fxFlexAlign.gt-sm="" fxFlexAlign="center" [disabled]="!orderForm.form.valid">
-        <md-icon>done</md-icon>
+        </mat-option>
+      </mat-select>
+      <button mat-mini-fab (click)="createOrder()" fxFlexAlign.gt-sm="" fxFlexAlign="center" [disabled]="!orderForm.form.valid">
+        <mat-icon>done</mat-icon>
       </button>
     </form>
   </div>
-</md-card>
+</mat-card>
 
 <!-- list of user's orders -->
 <app-order-list></app-order-list>

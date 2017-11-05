@@ -5,7 +5,7 @@ import { FirebaseListObservable } from 'angularfire2/database';
 import { OrderService } from './../order.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../order';
-import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import 'rxjs/add/operator/groupBy';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
@@ -22,7 +22,7 @@ export class AllOrdersListComponent implements OnInit {
   orders$: FirebaseListObservable<Order[]>;
 
 
-  constructor(private orderService: OrderService, public dialog: MdDialog, public authService: AuthService) { }
+  constructor(private orderService: OrderService, public dialog: MatDialog, public authService: AuthService) { }
 
   ngOnInit() {
     this.orders$ = this.orderService.getOrdersList({

@@ -1,44 +1,44 @@
-<md-menu #menu="mdMenu">
-  <button md-menu-item [routerLink]="['/home']">
-    <md-icon>home</md-icon>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item [routerLink]="['/home']">
+    <mat-icon>home</mat-icon>
     <span>Home</span>
   </button>
 
-  <button md-menu-item [routerLink]="['/order']" [disabled]="!auth">
-    <md-icon>plus_one</md-icon>
+  <button mat-menu-item [routerLink]="['/order']" [disabled]="!auth">
+    <mat-icon>plus_one</mat-icon>
     <span>Place order</span>
   </button>
-  <button md-menu-item [routerLink]="['/orders']" [disabled]="!auth">
-    <md-icon>local_cafe</md-icon>
+  <button mat-menu-item [routerLink]="['/orders']" [disabled]="!auth">
+    <mat-icon>local_cafe</mat-icon>
     <span>All orders</span>
   </button>
 
-  <button md-menu-item [routerLink]="['/admins']" *ngIf="authService.isAdmin">
-    <md-icon>people</md-icon>
+  <button mat-menu-item [routerLink]="['/admins']" *ngIf="authService.isAdmin">
+    <mat-icon>people</mat-icon>
     <span>Admins</span>
   </button>
-  <!-- <button md-menu-item disabled [routerLink]="['/users']">
-    <md-icon>map</md-icon>
+  <!-- <button mat-menu-item disabled [routerLink]="['/users']">
+    <mat-icon>map</mat-icon>
     <span>Local map</span>
   </button> -->
-</md-menu>
+</mat-menu>
 <div>
-  <md-toolbar color="primary">
+  <mat-toolbar color="primary">
     <div fxLayoutAlign="space-around center" class="nav-buttons">
-      <button md-icon-button [mdMenuTriggerFor]="menu">
-        <md-icon>menu</md-icon>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
       </button>
-      <button md-button [routerLink]="['/home']">
+      <button mat-button [routerLink]="['/home']">
         <h1>Firebootcamp Coffee</h1>
       </button>
       <div *ngIf="(authService.user$ | async)?.uid">
-        <button md-raised-button color="accent" (click)="authService.logout()">Logout</button>
+        <button mat-raised-button color="accent" (click)="authService.logout()">Logout</button>
       </div>
       <div *ngIf="!(authService.user$ | async)?.uid">
-          <button md-raised-button color="accent"></button>
+          <button mat-raised-button color="accent"></button>
         </div>
     </div>
-  </md-toolbar>
+  </mat-toolbar>
   <div>
     <div fxFlexOffset.gt-sm="20%" fxFlex.gt-sm="60%">
       <router-outlet></router-outlet>

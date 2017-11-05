@@ -1,11 +1,11 @@
-<md-card>
-  <md-card-title fxLayoutAlign="space-around center">
+<mat-card>
+  <mat-card-title fxLayoutAlign="space-around center">
     <span>Adam is shouting you a coffee</span>
-  </md-card-title>
-  <md-card-subtitle fxLayoutAlign="space-around center" fxLayout="column">
+  </mat-card-title>
+  <mat-card-subtitle fxLayoutAlign="space-around center" fxLayout="column">
       <p *ngIf="!auth">Login with your google account to place order</p>
-      <button md-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!auth">LOGIN</button>
-      <button md-raised-button color="primary" [routerLink]="['/order']" *ngIf="auth">Place Order</button>
-  </md-card-subtitle>
-  <img md-card-image src="https://pbs.twimg.com/profile_images/525629364088479744/0YAQNbyC_400x400.png" alt="Photo of Adam Cogan">
-</md-card>
+      <button mat-raised-button color="accent" (click)="authService.googleLogin()" *ngIf="!auth">LOGIN</button>
+      <button mat-raised-button color="primary" [routerLink]="['/order']" *ngIf="auth">Place Order</button>
+  </mat-card-subtitle>
+  <img mat-card-image src="https://pbs.twimg.com/profile_images/525629364088479744/0YAQNbyC_400x400.png" alt="Photo of Adam Cogan">
+</mat-card>
